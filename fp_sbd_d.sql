@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Des 2019 pada 16.34
+-- Waktu pembuatan: 08 Des 2019 pada 18.28
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.3
 
@@ -50,21 +50,21 @@ INSERT INTO `barang` (`kode_barang`, `nama_barang`, `satuan_barang`, `kode_kateg
 ('BRG00007', 'hidrococo', 1, '000002', NULL),
 ('BRG00008', 'pensil fabelcastel 2b', 1, '000003', NULL),
 ('BRG00009', 'Indomie kuah rasa tomyum ala Thailand', 1, '000001', NULL),
-('BRG00010', 'Indomie rasa mie celor', 1, '000001', ''),
-('BRG00011', 'Indomie Mi Goreng Aceh.', 1, '000001', ''),
-('BRG00012', 'Indomie rasa soto betawi', 1, '000001', ''),
-('BRG00013', 'sedap ayam geprek', 1, '000001', ''),
-('BRG00014', 'Indomie rasa mie celor', 1, '000001', ''),
-('BRG00015', 'sedap ayam geprek', 1, '000001', ''),
+('BRG00010', 'sedap soto', 1, '000001', ''),
+('BRG00011', 'sedap goreng jumbo', 1, '000001', ''),
+('BRG00012', 'edap ayam spesial', 1, '000001', ''),
+('BRG00013', 'sedap bakso', 1, '000001', ''),
+('BRG00014', 'sedap ayam geprek', 1, '000001', ''),
+('BRG00015', 'sedap kari', 1, '000001', ''),
 ('BRG00016', 'sedap spice chicken', 1, '000001', ''),
-('BRG00017', 'sedap spice chicken', 1, '000001', ''),
-('BRG00018', 'Indomie Rasa Kari Ayam.', 1, '000001', ''),
-('BRG00019', 'sedap chitato', 1, '000001', ''),
-('BRG00020', 'Indomie rasa mie celor', 1, '000001', ''),
-('BRG00021', 'Indomie rasa mie celor', 1, '000001', ''),
-('BRG00022', 'sedap goreng jumbo', 1, '000001', ''),
-('BRG00023', 'sedap bakso', 1, '000001', ''),
-('BRG00024', 'sedap goreng jumbo', 1, '000001', '');
+('BRG00017', 'sedap sate', 1, '000001', ''),
+('BRG00018', 'sedap chitato', 1, '000001', ''),
+('BRG00019', 'Indomie Goreng Spesial Jumbo.', 1, '000001', ''),
+('BRG00020', 'Indomie Rasa Kari Ayam.', 1, '000001', ''),
+('BRG00021', 'Indomie Mi Goreng Aceh.', 1, '000001', ''),
+('BRG00022', 'Indomie Mi Goreng Rasa Sambal Matah.', 1, '000001', ''),
+('BRG00023', 'Indomie Mi Keriting Ayam Panggang.', 1, '000001', ''),
+('BRG00024', 'Indomie Mi Goreng Rasa Rendang.', 1, '000001', '');
 
 -- --------------------------------------------------------
 
@@ -103,6 +103,38 @@ CREATE TABLE `detail_transaksi` (
   `harga_beli` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `id_transaksi`, `kode_barang`, `jumlah_transaksi`, `harga_jual`, `harga_beli`) VALUES
+(1, 19, 'BRG00002', 3, 1700, 1500),
+(2, 20, 'BRG00003', 2, 2500, 1500),
+(4, 21, 'BRG00019', 1, 3600, 700),
+(5, 22, 'BRG00011', 2, 1000, 400),
+(6, 22, 'BRG00013', 1, 5800, 800),
+(7, 23, 'BRG00022', 1, 8200, 200),
+(8, 24, 'BRG00023', 1, 1600, 100),
+(9, 25, 'BRG00023', 2, 1600, 100),
+(10, 26, 'BRG00023', 3, 1600, 100),
+(11, 27, 'BRG00023', 4, 1600, 100),
+(12, 28, 'BRG00023', 5, 1600, 100),
+(13, 29, 'BRG00020', 1, 400, 100),
+(14, 30, 'BRG00020', 2, 400, 100),
+(15, 31, 'BRG00020', 3, 400, 100),
+(16, 32, 'BRG00020', 4, 400, 100),
+(17, 33, 'BRG00020', 5, 400, 100),
+(18, 34, 'BRG00020', 6, 400, 100),
+(19, 35, 'BRG00020', 7, 400, 100),
+(20, 36, 'BRG00011', 2, 1000, 400),
+(21, 37, 'BRG00011', 1, 1000, 400),
+(22, 37, 'BRG00010', 1, 6700, 100),
+(23, 38, 'BRG00024', 1, 9500, 800),
+(24, 38, 'BRG00020', 3, 400, 100),
+(25, 40, 'BRG00021', 1, 5300, 200),
+(26, 39, 'BRG00016', 1, 2700, 100),
+(27, 41, 'BRG00021', 2, 5300, 200);
+
 -- --------------------------------------------------------
 
 --
@@ -130,7 +162,22 @@ INSERT INTO `harga_barang` (`kode_barang`, `harga_jual`, `harga_beli`, `periode_
 ('BRG00005', 9000, 8000, '2019-12-01', '2019-12-31'),
 ('BRG00006', 8900, 8000, '2019-12-01', '2019-12-10'),
 ('BRG00007', 1200, 900, '2019-12-01', '2019-12-10'),
-('BRG00008', 2300, 900, '2019-12-01', '2019-12-09');
+('BRG00008', 2300, 900, '2019-12-01', '2019-12-09'),
+('BRG00010', 6700, 100, '2019-12-01', '2019-12-30'),
+('BRG00011', 1000, 400, '2019-12-01', '2019-12-30'),
+('BRG00012', 2400, 900, '2019-12-01', '2019-12-30'),
+('BRG00013', 5800, 800, '2019-12-01', '2019-12-30'),
+('BRG00014', 6400, 200, '2019-12-01', '2019-12-30'),
+('BRG00015', 4500, 500, '2019-12-01', '2019-12-30'),
+('BRG00016', 2700, 100, '2019-12-01', '2019-12-30'),
+('BRG00017', 9100, 100, '2019-12-01', '2019-12-30'),
+('BRG00018', 4200, 500, '2019-12-01', '2019-12-30'),
+('BRG00019', 3600, 700, '2019-12-01', '2019-12-30'),
+('BRG00020', 400, 100, '2019-12-01', '2019-12-30'),
+('BRG00021', 5300, 200, '2019-12-01', '2019-12-30'),
+('BRG00022', 8200, 200, '2019-12-01', '2019-12-30'),
+('BRG00023', 1600, 100, '2019-12-01', '2019-12-30'),
+('BRG00024', 9500, 800, '2019-12-01', '2019-12-30');
 
 -- --------------------------------------------------------
 
@@ -285,7 +332,7 @@ CREATE TABLE `transaksi` (
   `id_pelanggan` int(11) DEFAULT NULL,
   `total` int(11) NOT NULL,
   `bayar` int(11) NOT NULL,
-  `tanggal` varchar(50) NOT NULL,
+  `tanggal` date NOT NULL,
   `waktu` varchar(50) NOT NULL,
   `keterangan` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -295,12 +342,31 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_pelanggan`, `total`, `bayar`, `tanggal`, `waktu`, `keterangan`) VALUES
-(1, 1, NULL, 11400, 12000, '2019-12-08', '09:10', NULL),
-(2, 1, 8, 3500, 5000, '2019-12-09', '10:11', NULL),
-(15, 1, 1, 0, 0, '2019-12-08', '04:22:14', ''),
-(16, 1, 1, 0, 0, '2019-12-08', '04:22:43', ''),
-(17, 1, 1, 0, 0, '2019-12-08', '04:23:11', ''),
-(18, 1, 1, 0, 0, '2019-12-08', '04:27:31', '');
+(19, 1, 8, 1700, 1700, '2019-12-04', '11:41', NULL),
+(20, 1, 1, 2500, 2500, '2019-12-04', '17:40', ''),
+(21, 1, 1, 3600, 3600, '2019-12-22', '6:18', ''),
+(22, 1, 1, 7800, 7800, '2019-12-05', '17:44', ''),
+(23, 1, 1, 8200, 8200, '2019-12-01', '3:1', ''),
+(24, 1, 1, 1600, 1600, '2019-12-02', '19:11', ''),
+(25, 1, 1, 3200, 3200, '2019-12-21', '12:27', ''),
+(26, 1, 1, 4800, 4800, '2019-12-03', '14:24', ''),
+(27, 1, 1, 6400, 6400, '2019-12-21', '22:52', ''),
+(28, 1, 1, 8000, 8000, '2019-12-05', '14:56', ''),
+(29, 1, 1, 400, 400, '2019-12-11', '6:47', ''),
+(30, 1, 1, 800, 800, '2019-12-22', '21:18', ''),
+(31, 1, 1, 1200, 1200, '2019-12-25', '19:47', ''),
+(32, 1, 1, 1600, 1600, '2019-12-21', '23:54', ''),
+(33, 1, 1, 2000, 2000, '2019-12-03', '21:2', ''),
+(34, 1, 1, 2400, 2400, '2019-12-01', '21:44', ''),
+(35, 1, 1, 2800, 2800, '2019-12-17', '4:53', ''),
+(36, 1, 1, 2000, 2000, '2019-12-27', '22:44', ''),
+(37, 1, 1, 7700, 7700, '2019-12-23', '19:57', ''),
+(38, 1, 1, 10700, 10700, '2019-12-28', '1:21', ''),
+(39, 1, 1, 2700, 2700, '2019-12-20', '11:16', ''),
+(40, 1, 1, 5300, 5300, '2019-12-16', '0:42', ''),
+(41, 1, 1, 0, 0, '2019-12-08', '05:45:01', ''),
+(43, 1, 1, 0, 0, '2019-12-08', '06:12:45', ''),
+(44, 1, 1, 0, 0, '2019-12-08', '06:27:04', '');
 
 -- --------------------------------------------------------
 
@@ -418,7 +484,7 @@ ALTER TABLE `detail_pemasokan`
 -- AUTO_INCREMENT untuk tabel `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
@@ -442,7 +508,7 @@ ALTER TABLE `satuan`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
