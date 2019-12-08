@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <script language="javascript">
+        var XMLHTTPRequestObject = false;
+        if (window.XMLHttpRequest) {
+            XMLHttpRequestObject = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHttp");
+        }
+
+        function getusername(dataSource) {
+            if (XMLHttpRequestObject) {
+                XMLHttpRequestObject.open("GET", dataSource);
+                XMLHttpRequestObject.onreadystatechange = function () {
+                    if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+                        if (XMLHttpRequestObject.responseText == "terdaftar") {
+                            var target = document.getElementById("target");
+                            target.innerHTML = "<div>Maaf, username <b>" + input.value +
+                                "</b> sudah dipakai,silahkan pilih yang lain.</div>";
+                        } else {
+                            var target = document.getElementById("target");
+                            target.innerHTML = "<div>OK</div>";
+                        }
+                    }
+                }
+                XMLHttpRequestObject.send(null);
+            }
+        }
+
+        function cekusername(keyEvent) {
+            keyEvent = (keyEvent) ? keyEvent : window.event;
+            input = (keyEvent.target) ? keyEvent.target : keyEvent.srcElement;
+            if (keyEvent.type == "keyup") {
+                var target = document.getElementById("target");
+                target.innerHTML = "<div></div>";
+                if (input.value) {
+                    getusername("cekusername.php?qu=" + input.value);
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h4>Silahkan isi Username "Ivan" dan cobalah isi dengan username lainnya</h4>
+    <form>
+        Username: <input type="text" name="username" onkeyup="cekusername(event)" />
+        <Br />
+        <div id="target">
+        </div>
+    </form>
+</body>
+
+</html>

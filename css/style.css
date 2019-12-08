@@ -1,0 +1,16 @@
+.stroke {
+    border: 1px solid black;
+}
+
+.tmbl-ramping {
+    /* height: 30px; */
+    width: 50px;
+    padding: 3px;
+    margin: 32px auto;
+
+}
+
+.ataskasir {
+    height: 150px;
+    margin: 0 5px 20px 5px;
+}
