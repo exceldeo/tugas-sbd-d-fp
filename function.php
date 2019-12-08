@@ -1,12 +1,13 @@
 <?php 
 
 // koneksi ke mysql
-$conn = mysqli_connect("localhost","root","","kasirexcel");
+$conn = mysqli_connect("localhost","root","","fp_sbd_d");
 
 // mengambil satu-satu query di masukan ke array
 function query($query){
   global $conn;
   $result = mysqli_query($conn,$query);
+
   $rows=[];
   // echo mysqli_fetch_assoc($result);
   // var_dump( mysqli_fetch_assoc($result));
@@ -17,6 +18,14 @@ function query($query){
   return $rows;
 }
 
+function idbesar(){
+
+  $query = query("SELECT MAX(id_transaksi)
+  FROM transaksi")[0];
+
+  return $query["MAX(id_transaksi)"];
+}
+
 // fungsi tambah data
 function tambah($data){
   global $conn;
@@ -24,46 +33,71 @@ function tambah($data){
   $nama=htmlspecialchars($data["namaBrg"]);
   $hargaB=$data["hargaB"];
   $hargaJ=$data["hargaJ"];
+  $satuan = $data["satuan"];
+  $kategori = $data["kategori"];
+  $keterangan = htmlspecialchars($data["ket"]);
+  $p_awal = $data["p_awal"];
+  $p_awal = $data["p_awal"];
   // var_dump($data);
   // die;
   
-  $query="INSERT INTO barang value ('','$kode','$nama','$hargaB','$hargaJ')";
+  $query = "INSERT INTO barang value ('$kode','$nama','$satuan','$kategori','$keterangan')";
+  $query2 = "INSERT INTO harga_barang value ('$kode','$hargaJ','$hargaB','$p_awal','$p_akhir')";
+  // $query3 = "UPDATE";
   
   mysqli_query($conn,$query);
+  mysqli_query($conn,$query2);
 
   return mysqli_affected_rows($conn);
 }
 
-function tambahnota($keyword,$jumlah){
-  global $conn;
-  $query = "SELECT * FROM barang WHERE kodeBarang LIKE '$keyword'";  
-  $data=query($query);
-  if($data==[]){}
-  else{
-
-      foreach($data as $data){
-        $id=$data['id'];
-        $kode=htmlspecialchars($data["kodeBarang"]);
-        $nama=htmlspecialchars($data["namaBarang"]);
+function tambahnota($keyword,$jumlah,$besar){
+    global $conn;
+    $query = "SELECT * FROM barang WHERE kode_barang LIKE '$keyword'";  
+    $data=query($query);
+    if($data==[]){}
+    else{
+  
+        foreach($data as $data){
+          $kode=htmlspecialchars($data["kode_barang"]);
+          $nama=htmlspecialchars($data["nama_barang"]);
+        }
+        $hari = date('Y-m-d');
+        $data2= query("SELECT * FROM harga_barang hb 
+          where '$kode' = hb.kode_barang 
+          and hb.periode_awal <= '$hari'
+          and hb.periode_akhir >= '$hari' ")[0];
+  
+        $datahj = $data2['harga_jual'];
+        $datahb = $data2['harga_beli'];
+  
+        $query2="INSERT INTO detail_transaksi value ('','$besar','$kode','$jumlah','$datahj','$datahb')";
+        mysqli_query($conn,$query2);
+  
       }
-      $jumlah2=$jumlah;
-      
-      $query2="INSERT INTO nota value ('','$id','$jumlah')";
-      
-      mysqli_query($conn,$query2);
+  
+    if(mysqli_affected_rows($conn)>0){
+      echo ' <script>
+      document.location.href="index.php";
+      </script>';
     }
+    else{
+      echo ' <script>
+      alert("Kode yang anda masukan salah");
+      document.location.href="index.php";
+      </script>';
+    }
+  }
 
-  if(mysqli_affected_rows($conn)>0){
-    echo ' <script>
-    document.location.href="index.php";
-    </script>';
-  }
-  else{
-    echo ' <script>
-    alert("Kode yang anda masukan salah");
-    document.location.href="index.php";
-    </script>';
-  }
+function tambahnota2(){
+  global $conn;
+  
+  $null = NULL;
+  $tanggal = date("Y-m-d");
+  $waktu = date("h:i:s");
+  $query = "INSERT INTO transaksi value ('',1,1,0,0,'$tanggal','$waktu','')";
+  mysqli_query($conn,$query);
+  return mysqli_affected_rows($conn);
 }
 
 function tambahakun($data){
@@ -82,39 +116,6 @@ function tambahakun($data){
   return mysqli_affected_rows($conn);
 }
 
-function upload(){
-  $nama_file = $_FILES['file']['name'];
-  $ukuran_file = $_FILES['file']['size'];
-  $error = $_FILES['file']['error'];
-  $tmpFile = $_FILES['file']['tmp_name'];
-
-// jika tidak ada gambar yang di upload
-  if($error == 4){
-
-  }
-
-  $ekstensi_file_valid = ['jpg','jpeg','png'];
-  $ekstensi_file = explode('.',$nama_file);
-  $ekstensi_file = strtolower(end($ekstensi_file));
-  // mencari ektesi file
-  if(!in_array($ekstensi_file,$ekstensi_file_valid)){
-    echo ' <script>
-    alert("yang anda upload bukan gambar");
-    document.location.href="tampildata.php";
-    </script>';
-    return false;
-  }
-  // bikin random nama
-  $nama_file_baru = uniqid();
-  $nama_file_baru .= '.';
-  $nama_file_baru .= $ekstensi_file;
-
-  move_uploaded_file($tmpFile,'img/'.$nama_file_baru);
-// var_dump($nama_file);
-// die;
-  return $nama_file_baru;
-}
-
 // fungsi hapus data
 function hapus($id){
     global $conn;
@@ -126,105 +127,48 @@ function hapus($id){
 
 function hapusnota($id){
   global $conn;
-  mysqli_query($conn,"DELETE FROM nota WHERE id_nota = $id");
+  mysqli_query($conn,"DELETE FROM detail_transaksi WHERE id_detail_transaksi = $id");
   // die;
 
   return mysqli_affected_rows($conn);
 }
 
-// fungsi ubah data
-function ubah($data){
-  global $conn;
-  $id=$data['id'];
-  $kode=htmlspecialchars($data["kodeBrg"]);
-  $nama=htmlspecialchars($data["namaBrg"]);
-  $hargaB=$data["hargaB"];
-  $hargaJ=$data["hargaJ"];
-
-  $query="UPDATE barang SET 
-      kodeBarang = '$kode',
-      namaBarang = '$nama',
-      hargaBeli='$hargaB',
-      hargaJual='$hargaJ'
-      WHERE id=$id
-      ";
-  
-  mysqli_query($conn,$query);
-
-  return mysqli_affected_rows($conn);
-}
 
 // fungsi cari
 function cari($keyword){
   
-  $query = "SELECT * FROM barang WHERE namaBarang LIKE '%$keyword%'";
+  $query = "SELECT * FROM barang WHERE nama_barang LIKE '%$keyword%'";
   // var_dump($query);
   return query($query); 
 }
 
 
-function pesan($data){
-  global $conn;
-  $id=$data;
-
-  // var_dump($query);
-  // die;
-  
-  $query="INSERT INTO nota value ('$id')";
-  
-  mysqli_query($conn,$query);
-}
-
-function pesanhapus($id){
-  global $conn;
-
-  mysqli_query($conn,"DELETE FROM nota WHERE id = $id");
-  
-
-  return mysqli_affected_rows($conn);
-}
-
-function hapussemua(){
-  global $conn;
-  mysqli_query($conn,"DELETE FROM nota");
-
-  return mysqli_affected_rows($conn);
-}
-
-function laporan(){
-  global $conn;
-
-  // $data=query("SELECT * FROM nota");
-  $date=date('d-m-Y');
-  // $date = now();
-  // var_dump($date); 
-  // echo $date;
-  // die;
-  $data2= query("SELECT b.*,a.namaBarang, a.hargaJual,a.hargaBeli FROM nota b, barang a 
-where a.id = b.id_barang");
-foreach($data2 as $row) {
-
-  $namaB=$row['namaBarang'];
-  $hrgJ=intval($row['hargaJual']);
-  $hrgB=intval($row['hargaBeli']);
-  $jml=intval($row['JumlahBarang']);
-
-  // var_dump($namaB);
-  // var_dump($hrgJ);
-  // var_dump($hrgB);
-  // var_dump($jml);
-  // var_dump($date);
-  // die;
-  mysqli_query($conn,"INSERT INTO laporan value('$namaB','$hrgJ','$hrgB','$jml','$date')");
-}
-// echo mysqli_affected_rows($conn);
-// die;
-  return mysqli_affected_rows($conn);
-}
-
 function cari2($keyword){
-  
-  $query = "SELECT * FROM laporan WHERE NamaBrg LIKE '%$keyword%' OR tgl LIKE '%$keyword%'";
-  // var_dump($query);
+
+  $query = "SELECT * FROM transaksi tr,detail_transaksi dt, barang br
+  WHERE tr.id_transaksi = dt.id_transaksi
+  AND dt.kode_barang = br.kode_barang
+  AND br.nama_barang LIKE '%$keyword%'";
+
+  return query($query); 
+}
+
+function cari3($p_ak,$p_aw){
+
+  $query = "SELECT * FROM transaksi tr,detail_transaksi dt, barang br
+  WHERE tr.id_transaksi = dt.id_transaksi
+  AND dt.kode_barang = br.kode_barang 
+  AND '$p_aw' <= tr.tanggal 
+  AND '$p_ak' >= tr.tanggal";
+
+  return query($query); 
+}
+
+function cari4($keyword){
+
+  $query = "SELECT * FROM barang br,harga_barang hb 
+  where br.kode_barang = hb.kode_barang 
+  AND br.nama_barang LIKE '%$keyword%'";
+
   return query($query); 
 }

@@ -1,87 +1,96 @@
 <?php 
 require 'function.php';
+
+$coba = true;
+
+$data= query("SELECT b.*, a.namaBarang, a.hargaJual FROM nota b, barang a 
+where a.id = b.id_barang");
+if(isset($_POST['tmblTmbh'])){
+    $data = tambahnota($_POST['kode'],$_POST['jumlah']);
+}
 $total=0;
-$hari = date('Y-m-d');
 
-$besar = idbesar();
+$data2= query("SELECT * FROM barang");
 
-$data= query("SELECT * FROM detail_transaksi dt, barang br 
-where  dt.id_transaksi = '$besar'
-and dt.kode_barang = br.kode_barang");
+// echo $data;
 // var_dump($data);
 // die;
-
-if(isset($_POST['tmblTmbh'])){
-    $data = tambahnota($_POST['kode'],$_POST['jumlah'],$besar);
-
-}
-
-
-$data2= query("SELECT * FROM barang br,harga_barang hb 
-where br.kode_barang = hb.kode_barang 
-and hb.periode_awal <= '$hari'
-and hb.periode_akhir >= '$hari' ");
-
-$data3= query("SELECT nama_pelanggan,id_pelanggan 
-FROM pelanggan");
-
 ?>
 
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <title>Home</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="icon" type="image/png" href="img/logo2.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="asset/css/simple-sidebar.css" rel="stylesheet">
+    <link href="asset/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-</head>
-</style>
+    <title>Kasir</title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">KasirExcel</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="index.php">Kasir <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="tampildatabase.php">Daftar Barang</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="tambahbrg.php">Tambah Barang</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="laporanpenjualan.php">Laporan Penjualan</a>
-      </li> 
-    </ul>
-      <div class="nav-item">
-        <a class="nav-link" href="tambahakun.php">Tambah Akun</a>
-      </div>
-      <div class="nav-item">
-        <a class="nav-link" href="login.php">Keluar Akun</a>
-      </div>
-
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                <a href="index.php">
+                    KasirExcel
+                </a>
+                </li>
+                <li>
+                    <a href="index.php">Mesin kasir</a>
+                </li>
+                <li>
+                    <a href="tampildatabase.php">Daftar Barang</a>
+                </li>
+                <li>
+                    <a href="tambahbrg.php">Tambah Barang</a>
+                </li>
+                <li>
+                    <a href="laporanpenjualan.php">Laporan Penjualan</a>
+                </li>
+                
+                <?php if($coba == false):?>
+                <li>
+                    <a href="tambahakun.php">Tambah Akun</a>
+                </li>
+                <?php endif ?>
+                <?php if($coba == false):?>
+                <li>
+                    <a href="login.php">Keluar Akun</a>
+                </li>
+                <?php endif ?>
+            </ul>
         </div>
-</nav>
-    
-<!-- Page Content -->
-<div id="page-content-wrapper">
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
             <div class="container-fluid">
 
+                <!-- start nav -->
+                <div class="row ">
+                    <div class="col-lg-4 " style="padding-top:15px;">
+                        <a href="#menu-toggle" class="btn btn-toolbar btn-default fas fa-bars" style="width:40px;height:30px;" id="menu-toggle"></a>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <p class="display-3 text-center" style="">Aplikasi Kasir</p>
+                    </div>
+                    <div class="col-lg-4 "></div>
+                </div>
+                <!-- end nav  -->
                 <div class="row">
                 <!-- kasir kiri  -->
                     <div class="col-5 ">
@@ -92,21 +101,7 @@ FROM pelanggan");
                             </div>
                         </div>
                         <!-- database kiri  -->
-                        <div class="row pt-2"> 
-                          <div class="col-4">Pelanggan : </div>
-                          <div class="col-6">
-                          <form action="" method="post">
-                            <select>
-                              <option name="pelanggan" value="<?=NULL?>">...</option>
-                              <?php
-                              foreach($data3 as $row3) :?>
-                              <option name="pelanggan" value="<?=$row3['id_pelanggan']?>"><?=$row3['nama_pelanggan']?></option>
-                              <?php endforeach?>
-                            </select>
-                          </form>
-                          </div>
-                        </div>
-                        <div class="row stroke pt-1" >
+                        <div class="row pt-2 stroke" >
                             <div class="col-12  " style="overflow:scroll; height:530px">
                                 <!--blablabla-->
                                 <form action="" method="post">
@@ -133,9 +128,9 @@ FROM pelanggan");
                                                     <?php
                                                     foreach($data2 as $row2) :?>
                                                     <tr>
-                                                        <td class="text-center "><?= $row2['kode_barang'] ?></td>
-                                                        <td class="text-center "><?= $row2['nama_barang'] ?></td>
-                                                        <td class="text-center"><?= "Rp.".$row2['harga_jual'] ?></td>
+                                                        <td class="text-center "><?= $row2['kodeBarang'] ?></td>
+                                                        <td class="text-center "><?= $row2['namaBarang'] ?></td>
+                                                        <td class="text-center"><?= "Rp.".$row2['hargaJual'] ?></td>
                                                     </tr>
                                                     <?php endforeach ?>
                                                 </tbody>
@@ -187,16 +182,16 @@ FROM pelanggan");
                                 <tbody>
                                     <?php $nomor = 1 ;
                                     foreach($data as $row) :
-                                        $total=$total+$row['jumlah_transaksi']*$row['harga_jual']?>
+                                        $total=$total+$row['JumlahBarang']*$row['hargaJual']?>
                                         <tr>
                                             <td class="text-center"><?= $nomor++ ?></td>
-                                            <td class="text-center"><?= $row['nama_barang'] ?></td>
-                                            <td class="text-center"><?= 'Rp.'.$row['harga_jual'] ?></td>
-                                            <td class="text-center"><?= $row['jumlah_transaksi'] ?></td>
-                                            <td class="text-center"><?= 'Rp.'.$row['jumlah_transaksi']*$row['harga_jual'] ?></td>
+                                            <td class="text-center"><?= $row['namaBarang'] ?></td>
+                                            <td class="text-center"><?= 'Rp.'.$row['hargaJual'] ?></td>
+                                            <td class="text-center"><?= $row['JumlahBarang'] ?></td>
+                                            <td class="text-center"><?= 'Rp.'.$row['JumlahBarang']*$row['hargaJual'] ?></td>
                                             <td class="text-center">
                                             <form method="get">
-                                                <a href="hpsnota.php?id=<?= $row['id_detail_transaksi'];?>" class="btn btn-danger" 
+                                                <a href="hpsnota.php?id=<?= $row['id_nota'];?>" class="btn btn-danger" 
                                                 role="button" onclick="return confirm('data ingin di hapus?');">Hapus</a>
                                             </form>
                                             </td>
@@ -227,7 +222,7 @@ FROM pelanggan");
                             </div>
                             <div class="row pb-1">
                                 <div class="col-12">
-                                    <a href="tambahnota.php" style="height:50px;" class="btn btn-success btn-block"><h4>Bayar</h4></a>
+                                    <button type="button" onclick="printnota()" style="height:50px;" class="btn btn-success btn-block"><h4>Bayar</h4></button>
                                 </div>
                             </div>
                         </form>
@@ -273,9 +268,28 @@ FROM pelanggan");
 
     <script src="asset/js/jquery.js"></script>
     <script src="asset/js/bootstrap.min.js"></script>
-    <script src="js/ajax.js"></script>
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+    <script>
+ 
+ function tampilkan_nilai_form(){
+     newWindow = window.open("http://localhost/kasirexcel/tampildatabase2.php", "Jendela Baru", "left=20px,top=100px,width=400px, height=400px");
+ }
+ </script>
+ <script src="js/ajax.js"></script>
+ <script>
+    function printnota(){
+    window.open("http://localhost/kasirexcel/print.php?uangg="+uangg.value, "printnota", "");
+    document.location.href="hpssemua.php";
+    window.close();
+    }
+  </script>
 
-        
-  </body>
-  
-  </html>
+
+</body>
+
+</html>
