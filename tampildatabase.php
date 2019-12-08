@@ -52,14 +52,14 @@ if(isset($_POST['tmbl_cari'])){
         <a class="nav-link" href="tampildatabase.php">Daftar Barang</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="tambahbrg.php">Tambah Barang</a>
+        <a class="nav-link" href="#">Tambah Barang</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="laporanpenjualan.php">Laporan Penjualan</a>
       </li> 
     </ul>
       <div class="nav-item">
-        <a class="nav-link" href="tambahakun.php">Tambah Akun</a>
+        <a class="nav-link" href="#">Tambah Akun</a>
       </div>
       <div class="nav-item">
         <a class="nav-link" href="login.php">Keluar Akun</a>

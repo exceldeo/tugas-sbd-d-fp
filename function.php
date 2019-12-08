@@ -89,12 +89,24 @@ function tambahnota($keyword,$jumlah,$besar){
     }
   }
 
-function tambahnota2(){
+function tambahnota2($id,$pel,$uang,$total){
   global $conn;
-  
-  $null = NULL;
-  $tanggal = date("Y-m-d");
-  $waktu = date("h:i:s");
+
+      $tanggal = date("Y-m-d");
+      $waktu = date("h:i:s");
+
+  $query="UPDATE transaksi SET 
+      id_pelanggan = '$pel',
+      total = '$total',
+      bayar = '$uang',
+      tanggal = '$tanggal',
+      waktu = '$waktu'
+      WHERE id_transaksi = '$id'
+      ";
+ 
+  mysqli_query($conn,$query);
+
+ 
   $query = "INSERT INTO transaksi value ('',1,1,0,0,'$tanggal','$waktu','')";
   mysqli_query($conn,$query);
   return mysqli_affected_rows($conn);

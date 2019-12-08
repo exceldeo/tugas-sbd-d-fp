@@ -36,38 +36,36 @@ if(isset($_POST['tmbl_cari2'])){
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">KasirExcel</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">KasirExcel</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="index.php">Kasir <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="tampildatabase.php">Daftar Barang</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="tambahbrg.php">Tambah Barang</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="laporanpenjualan.php">Laporan Penjualan</a>
-        </li>
-      </ul>
-
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.php">Kasir <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="tampildatabase.php">Daftar Barang</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Tambah Barang</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="laporanpenjualan.php">Laporan Penjualan</a>
+      </li> 
+    </ul>
       <div class="nav-item">
-        <a class="nav-link" href="tambahakun.php">Tambah Akun</a>
+        <a class="nav-link" href="#">Tambah Akun</a>
       </div>
       <div class="nav-item">
         <a class="nav-link" href="login.php">Keluar Akun</a>
       </div>
 
-    </div>
-  </nav>
+        </div>
+</nav>
   
   
   <!-- Page Content -->
@@ -122,6 +120,7 @@ if(isset($_POST['tmbl_cari2'])){
           <thead>
             <tr>
               <th scope="col" class="text-center">no</th>
+              <th scope="col" class="text-center">Kode Barang</th>
               <th scope="col" class="text-center">Nama Barang</th>
               <th scope="col" class="text-center">Harga Beli</th>
               <th scope="col" class="text-center">Harga Jual</th>
@@ -135,9 +134,10 @@ if(isset($_POST['tmbl_cari2'])){
             foreach($data as $row) :?>
             <tr>
               <td class="text-center"><?= $nomor++ ?></td>
+              <td class="text-center"><?= $row['kode_barang'] ?></td>
               <td class="text-center"><?= $row['nama_barang'] ?></td>
-              <td class="text-center"><?= "Rp.".$row['harga_jual'] ?></td>
               <td class="text-center"><?= "Rp.".$row['harga_beli'] ?></td>
+              <td class="text-center"><?= "Rp.".$row['harga_jual'] ?></td>
               <td class="text-center"><?= $row['jumlah_transaksi'] ?></td>
               <td class="text-center"><?= $row['tanggal'] ?></td>
             </tr>
