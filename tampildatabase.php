@@ -57,6 +57,12 @@ if(isset($_POST['tmbl_cari'])){
       <li class="nav-item">
         <a class="nav-link" href="laporanpenjualan.php">Laporan Penjualan</a>
       </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="lptanggal.php">Keuntungan</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="tred.php">Tred</a>
+      </li> 
     </ul>
       <div class="nav-item">
         <a class="nav-link" href="#">Tambah Akun</a>

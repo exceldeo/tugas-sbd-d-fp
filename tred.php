@@ -1,18 +1,7 @@
 <?php 
 require 'function.php';
 
-$data= query("SELECT * FROM transaksi tr,detail_transaksi dt, barang br
-WHERE tr.id_transaksi = dt.id_transaksi
-AND dt.kode_barang = br.kode_barang");
-
-if(isset($_POST['tmbl_cari'])){
-
-    $data = cari2($_POST['keyword']);
-}
-if(isset($_POST['tmbl_cari2'])){
-
-  $data = cari3($_POST['p_ak'],$_POST['p_aw']);
-}
+$data= query("SELECT tr.tanggal,(dt.jumlah_transaksi-dt2.jumlah_transaksi) trend FROM transaksi tr,detail_transaksi dt JOIN detail_transaksi dt2 ON dt.id_detail_transaksi < dt2.id_detail_transaksi WHERE tr.id_transaksi = dt.id_transaksi GROUP BY dt.id_detail_transaksi");
 
 ?>
 
@@ -30,6 +19,50 @@ if(isset($_POST['tmbl_cari2'])){
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+</style>
+
 
   <title>Kasir</title>
 </head>
@@ -60,7 +93,7 @@ if(isset($_POST['tmbl_cari2'])){
         <a class="nav-link" href="lptanggal.php">Keuntungan</a>
       </li> 
       <li class="nav-item">
-        <a class="nav-link" href="tred.php">Tred</a>
+        <a class="nav-link" href="tred.php">Trend</a>
       </li> 
     </ul>
       <div class="nav-item">
@@ -80,72 +113,30 @@ if(isset($_POST['tmbl_cari2'])){
     <div class="col-lg-3 ">
       </div>
       <div class="col-lg-6 ">
-        <p class="display-3 text-center">Laporan Penjualan</p>
+        <p class="display-3 text-center">Laporan Trend</p>
       </div>
       <div class="col-lg-3 "></div>
     </div>
     <!-- end nav  -->
-    
-    <!-- fungsi search -->
-    <form action="" method="post">
-      <div class="row mt-3 mb-2">
-        <label for="keyword" class="ml-3 col-sm-1 ">
-          <p>Cari Barang: </p>
-        </label>
-        <div class="col-sm-3 ">
-          <input type="text" name="keyword" id="keyword" placeholder="Masukan Nama Barang" size="30"
-          class="form-control " autofocus autocomplete="off">
-        </div>
-        <div class="col-sm-1 ">
-          <button type="submit" class="btn btn-primary" name="tmbl_cari">Cari</button>
-        </div>
-        <div class="col-sm-2 ">
-          <input name="p_aw" class="form-control" type="date">
-        </div>
-        <div class="col-sm-2 ">
-          <input name="p_ak" class="form-control" type="date">
-        </div>
-        <div class="col-sm-1 ">
-          <button type="submit" class="btn btn-primary" name="tmbl_cari2">Cari</button>
-        </div>
-        <div class="col-sm-1 ">
-          <button type="submit" class="btn btn-danger" name="tmbl_cari">Reset</button>
-        </div>
-      </div>
-    </form>
-
-
-    <!-- end search -->  
+  
     
     <!-- start content -->
     
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-lg-12 " style="border:3px solid rgba(0,0,0,0.2)">
         <!-- tabel -->
         <table class="table">
           <thead>
             <tr>
-              <th scope="col" class="text-center">no</th>
-              <th scope="col" class="text-center">Kode Barang</th>
-              <th scope="col" class="text-center">Nama Barang</th>
-              <th scope="col" class="text-center">Harga Beli</th>
-              <th scope="col" class="text-center">Harga Jual</th>
-              <th scope="col" class="text-center">jumlah</th>
-              <th scope="col" class="text-center">Tanggal</th>
-            </tr>
+              <th scope="col" class="text-center">tanggal</th>
+              <th scope="col" class="text-center">tred</th>
           </thead>
           <tbody>
             <?php
-            $nomor = 1 ;
             foreach($data as $row) :?>
             <tr>
-              <td class="text-center"><?= $nomor++ ?></td>
-              <td class="text-center"><?= $row['kode_barang'] ?></td>
-              <td class="text-center"><?= $row['nama_barang'] ?></td>
-              <td class="text-center"><?= "Rp.".$row['harga_beli'] ?></td>
-              <td class="text-center"><?= "Rp.".$row['harga_jual'] ?></td>
-              <td class="text-center"><?= $row['jumlah_transaksi'] ?></td>
               <td class="text-center"><?= $row['tanggal'] ?></td>
+              <td class="text-center"><?=$row['trend'] ?></td>
             </tr>
             <?php endforeach ?>
           </tbody>

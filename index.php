@@ -68,6 +68,12 @@ FROM pelanggan");
         <li class="nav-item">
           <a class="nav-link" href="laporanpenjualan.php">Laporan Penjualan</a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link" href="lptanggal.php">Keuntungan</a>
+      </li> 
+      <li class="nav-item">
+        <a class="nav-link" href="tred.php">Tred</a>
+      </li> 
       </ul>
       <div class="nav-item">
         <a class="nav-link" href="#">Tambah Akun</a>
@@ -134,7 +140,7 @@ FROM pelanggan");
                       </thead>
                       <tbody>
                         <?php
-                                                    foreach($data2 as $row2) :?>
+                        foreach($data2 as $row2) :?>
                         <tr>
                           <td class="text-center "><?= $row2['kode_barang'] ?></td>
                           <td class="text-center "><?= $row2['nama_barang'] ?></td>
