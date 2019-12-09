@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Des 2019 pada 18.28
+-- Waktu pembuatan: 09 Des 2019 pada 08.27
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.3
 
@@ -133,7 +133,11 @@ INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `id_transaksi`, `kode_bar
 (24, 38, 'BRG00020', 3, 400, 100),
 (25, 40, 'BRG00021', 1, 5300, 200),
 (26, 39, 'BRG00016', 1, 2700, 100),
-(27, 41, 'BRG00021', 2, 5300, 200);
+(27, 41, 'BRG00021', 2, 5300, 200),
+(28, 44, 'BRG00017', 3, 9100, 100),
+(29, 41, 'BRG00020', 1, 400, 100),
+(30, 44, 'BRG00001', 10, 8000, 3400),
+(31, 45, 'BRG00006', 1, 8900, 8000);
 
 -- --------------------------------------------------------
 
@@ -363,10 +367,12 @@ INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `id_pelanggan`, `total`, `ba
 (37, 1, 1, 7700, 7700, '2019-12-23', '19:57', ''),
 (38, 1, 1, 10700, 10700, '2019-12-28', '1:21', ''),
 (39, 1, 1, 2700, 2700, '2019-12-20', '11:16', ''),
-(40, 1, 1, 5300, 5300, '2019-12-16', '0:42', ''),
-(41, 1, 1, 0, 0, '2019-12-08', '05:45:01', ''),
+(40, 1, 1, 5300, 5300, '2019-11-16', '0:42', ''),
+(41, 1, 1, 400, 500, '2020-01-02', '05:45:01', ''),
 (43, 1, 1, 0, 0, '2019-12-08', '06:12:45', ''),
-(44, 1, 1, 0, 0, '2019-12-08', '06:27:04', '');
+(44, 1, 1, 0, 0, '2019-12-08', '06:27:04', ''),
+(45, 1, 1, 0, 0, '2019-12-09', '06:04:13', ''),
+(46, 1, 1, 0, 0, '2019-12-09', '06:04:57', '');
 
 -- --------------------------------------------------------
 
@@ -484,7 +490,7 @@ ALTER TABLE `detail_pemasokan`
 -- AUTO_INCREMENT untuk tabel `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
@@ -508,7 +514,7 @@ ALTER TABLE `satuan`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
